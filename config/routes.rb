@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :working_days
+  resources :training_weeks
+  resources :training_plans
   get 'private/test'
   devise_for :users,
              path: '',
