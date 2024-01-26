@@ -1,0 +1,43 @@
+/* Estilos para el Modal y el botón de cierre */
+.Modal {
+    /* Estilos para el Modal */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 50%; /* O el ancho que prefieras */
+    outline: none;
+    animation: modalFadeIn 0.5s;
+  }
+  
+  .Overlay {
+    /* Fondo del Modal */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+  
+  .close-modal {
+    /* Botón de cierre */
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+  }
+  
+  /* Animación de apertura */
+  @keyframes modalFadeIn {
+    from { transform: translate(-50%, -50%) scale(0.7); opacity: 0; }
+    to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  }
+  

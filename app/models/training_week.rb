@@ -7,4 +7,8 @@ class TrainingWeek < ApplicationRecord
     hard: 1,
     accumulative: 2
   }
+
+  def active
+
+  end
 end

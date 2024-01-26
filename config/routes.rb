@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   resources :working_days
   resources :training_weeks
-  resources :training_plans
+  get 'training_plans/active', to: 'training_plans#active'
+  resources :training_plans do
+    collection do
+      get 'active', to: 'training_plans#active'
+    end
+  end
   get 'private/test'
   devise_for :users,
              path: '',

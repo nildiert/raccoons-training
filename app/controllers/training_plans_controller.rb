@@ -38,6 +38,12 @@ class TrainingPlansController < ApplicationController
     @training_plan.destroy
   end
 
+  def active
+    current_training_week = current_user.working_days.find_by(date: Date.today).training_week
+    render json: current_training_week, serializer: TrainingWeekSerializer
+    # render json: @training_plan
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_training_plan

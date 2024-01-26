@@ -1,4 +1,5 @@
 import { useRef } from "react"
+
 const Login = ({setCurrUser, setShow}) =>{
   const formRef=useRef()
   const login=async (userInfo, setCurrUser)=>{
@@ -35,18 +36,39 @@ const Login = ({setCurrUser, setShow}) =>{
     e.preventDefault()
     setShow(false)
   }
-  return(
-    <div>
-      <form ref={formRef} onSubmit={handleSubmit}>
-        Email: <input type="email" name='email' placeholder="email" />
-        <br/>
-        Password: <input type="password" name='password' placeholder="password" />
-        <br/>
-        <input type='submit' value="Login" />
-      </form>
-      <br />
-      <div>Not registered yet, <a href="#signup" onClick={handleClick} >Signup</a> </div>
+  return (
+    <div className="container">
+        <div className="row justify-content-center">
+            <div className="col-lg-5 col-md-7 col-sm-9">
+                <div className="card shadow-lg border-0 rounded-lg mt-5">
+                    <div className="card-header">
+                        <h3 className="text-center font-weight-light my-4">Inicio de Sesión</h3>
+                    </div>
+                    <div className="card-body">
+                        <form ref={formRef} onSubmit={handleSubmit}>
+                            <div className="form-floating mb-3">
+                                <input type="email" className="form-control" name="email" placeholder="name@example.com" />
+                                <label htmlFor="email">Email</label>
+                            </div>
+                            <div className="form-floating mb-3">
+                                <input type="password" className="form-control" name="password" placeholder="Password" />
+                                <label htmlFor="password">Contraseña</label>
+                            </div>
+                            <div className="d-flex align-items-center justify-content-between mt-4 mb-0">
+                                <button className="btn btn-primary" type="submit">Iniciar Sesión</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div className="card-footer text-center py-3">
+                        <div className="small">
+                            ¿No estás registrado? <a href="#signup" onClick={handleClick}>Regístrate</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  )
-}
-export default Login
+);
+};
+
+export default Login;

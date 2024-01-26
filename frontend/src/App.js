@@ -1,14 +1,22 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Login from './components/Login';
+import HomePage from './components/HomePage';
 import './App.css';
-import User from './components/User'
-import PrivateText from './components/PrivateText'
 
 function App() {
-  const [currUser, setCurrUser]=useState(null);
+  const [currUser, setCurrUser] = useState(null);
+
   return (
-    <div className="App">
-      <User currUser={currUser} setCurrUser={setCurrUser} />
-    </div>
+    <Router>
+      <div className="container-fluid">
+        <Routes>
+          <Route path="/login" element={currUser ? <Navigate to="/" /> : <Login setCurrUser={setCurrUser} />} />
+          <Route path="/" element={currUser ? <HomePage currUser={currUser} /> : <Navigate to="/login" />} />
+          {/* Agrega más rutas según sea necesario */}
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

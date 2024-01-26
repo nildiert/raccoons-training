@@ -1,26 +1,19 @@
-import Signup from "./Signup";
-import Login from './Login'
-import Logout from './Logout'
-import PrivateText from './PrivateText'
-import { useState } from "react";
-const User = ({currUser, setCurrUser}) => {
-    const [show, setShow]=useState(true)
-    if(currUser) 
+import Login from './Login';
+import Logout from './Logout';
+import ActiveWeek from './training/ActiveWeek';
+
+const User = ({ currUser, setCurrUser }) => {
+    if (currUser) {
         return (
             <div>
-            Hello {currUser.email}
-            <PrivateText currUser={currUser}/>
-            <Logout setCurrUser={setCurrUser}/>
+                Hello {currUser.email}
+                <Logout setCurrUser={setCurrUser} />
+                <ActiveWeek currUser={currUser} />
             </div>
-        )
-    return (
-        <div>
-            { show?
-                <Login setCurrUser={setCurrUser} setShow={setShow}/>  
-                :
-                <Signup setCurrUser={setCurrUser}  setShow={setShow} />
-            }
-        </div>
-    )
-}
-export default User
+        );
+    } else {
+        return <Login setCurrUser={setCurrUser} />;
+    }
+};
+
+export default User;

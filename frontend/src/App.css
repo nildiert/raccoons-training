@@ -36,3 +36,8 @@
     transform: rotate(360deg);
   }
 }
+.sidebar {
+  background-color: #f8f9fa; /* Un ejemplo de color de fondo */
+  padding: 20px;
+  /* Añade aquí más estilos personalizados */
+}
