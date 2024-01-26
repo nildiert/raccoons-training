@@ -36,7 +36,7 @@ const ActiveWeek=({currUser})=>{
         }
     };
 
-    const markAsCompleted = async (workingDayId) => {
+    const markAsCompleted = async (workingDayId, isCompleted) => {
         const url = `http://localhost:3000/working_days/${workingDayId}`;
         try {
             const response = await fetch(url, {
@@ -45,15 +45,16 @@ const ActiveWeek=({currUser})=>{
                     'Content-Type': 'application/json',
                     'Authorization': localStorage.getItem("token")
                 },
-                body: JSON.stringify({ completed: true })
+                body: JSON.stringify({ completed: !isCompleted }) // Invierte el estado actual
             });
-            if (response.ok) {
-                setShowCongratsModal(true); // Muestra el modal de felicitaciones
-                setModalIsOpen(false); // Cierra el modal de detalles del día de entrenamiento
-                // Puede que necesites actualizar los datos aquí
-            }
             if (!response.ok) throw new Error('Error al actualizar');
-            getData(); // Suponiendo que getData() es la función que actualiza los datos del plan de entrenamiento
+            
+            // Actualiza el estado o realiza cualquier otra acción necesaria después de la actualización
+            if (!isCompleted) {
+                setShowCongratsModal(true); // Muestra el modal de felicitaciones si se completa
+            }
+            setModalIsOpen(false); // Cierra el modal de detalles del día de entrenamiento
+            getData(); // Actualiza los datos del plan de entrenamiento
         } catch (error) {
             console.error("Error al actualizar el día de entrenamiento", error);
         }
@@ -81,14 +82,14 @@ const ActiveWeek=({currUser})=>{
     useEffect(() => {
         if (currUser) getData();
     }, [currUser]);
-    const getColorClass = (kind) => {
+    const getColorClass = (kind, completed) => {
+        const baseClass = completed ? 'bg-' : 'border border-2 border-';
         switch (kind) {
-            case 'workout': return 'bg-success';
-            case 'intensity': return 'bg-danger';
-            case 'easy_run': return 'bg-info';
-            case 'rest': return 'bg-secondary';
-            case 'long_run': return 'bg-warning';
-            default: return 'bg-light';
+            case 'workout': return baseClass + 'info';
+            case 'intensity': return baseClass + 'warning';
+            case 'easy_run': return baseClass + 'success';
+            case 'long_run': return baseClass + 'primary text-white';
+            case 'rest': return baseClass + 'secondary';
         }
     };
 
@@ -103,7 +104,7 @@ return (
                     <h2>Training Plan: {activeWeek.training_plan.name}</h2>
                     <h3>Week {activeWeek.number} - {activeWeek.kind}</h3>
                     {activeWeek.working_days.map(day => (
-                    <div key={day.id} className={`card mb-3 ${getColorClass(day.kind)}`} onClick={() => openModal(day.id)}>
+                        <div key={day.id} className={`card mb-3 ${getColorClass(day.kind, day.completed)}`} onClick={() => openModal(day.id)}>
                             <div className="card-body">
                                 <h5 className="card-title">
                                     {getDayOfWeek(day.date)} - {day.date}
@@ -127,13 +128,12 @@ return (
                 onRequestClose={() => setModalIsOpen(false)}
                 contentLabel="Working Day Details"
             >
-                {/* Contenido del Modal */}
                 <button onClick={() => setModalIsOpen(false)} className="close-modal">X</button>
                 <WorkingDay details={workingDayDetails} />
                 {workingDayDetails && (
-                <button className="btn btn-primary" onClick={() => markAsCompleted(workingDayDetails.id)}>
-                    He terminado mi entrenamiento
-                </button>
+                    <button className="btn btn-primary" onClick={() => markAsCompleted(workingDayDetails.id, workingDayDetails.completed)}>
+                        {workingDayDetails.completed ? "No he terminado mi entrenamiento" : "He terminado mi entrenamiento"}
+                    </button>
                 )}
             </Modal>
             <CongratulationsModal

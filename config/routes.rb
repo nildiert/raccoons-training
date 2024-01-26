@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       get 'active', to: 'training_plans#active'
     end
   end
+  get 'runners/index', to: 'runners#index'
+
   get 'private/test'
   devise_for :users,
              path: '',

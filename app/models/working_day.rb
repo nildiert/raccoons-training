@@ -6,7 +6,7 @@ class WorkingDay < ApplicationRecord
     rest: 0,
     easy_run: 1,
     workout: 2,
-    long_rung: 3,
+    long_run: 3,
     intensity: 4
   }
 end
