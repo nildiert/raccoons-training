@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import Login from './components/Login';
 import HomePage from './components/HomePage';
 import Runners from './components/training/Runners'
+import Profile from './components/Profile'
 import './App.css';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={currUser ? <Navigate to="/home" /> : <Login setCurrUser={setCurrUser} />} />
           <Route path="/home" element={currUser ? <HomePage currUser={currUser} /> : <Navigate to="/login" />} />
           <Route path="/runners" element={currUser ? <Runners currUser={currUser} /> : <Navigate to="/login" />} />
+          <Route path="/profile" element={currUser ? <Profile currUser={currUser} /> : <Navigate to="/login" />} />
           {/* Agrega más rutas según sea necesario */}
         </Routes>
       </div>

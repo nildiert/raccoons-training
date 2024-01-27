@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_18_044205) do
+ActiveRecord::Schema.define(version: 2024_01_27_125158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -19,6 +19,20 @@ ActiveRecord::Schema.define(version: 2024_01_18_044205) do
     t.string "jti", null: false
     t.datetime "exp", null: false
     t.index ["jti"], name: "index_jwt_denylist_on_jti"
+  end
+
+  create_table "profiles", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "second_name"
+    t.string "second_last_name"
+    t.date "date_of_birth"
+    t.string "phone_number"
+    t.string "strava_url"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
   end
 
   create_table "training_plans", force: :cascade do |t|
@@ -66,6 +80,7 @@ ActiveRecord::Schema.define(version: 2024_01_18_044205) do
     t.index ["user_id"], name: "index_working_days_on_user_id"
   end
 
+  add_foreign_key "profiles", "users"
   add_foreign_key "training_plans", "users"
   add_foreign_key "training_weeks", "training_plans"
   add_foreign_key "working_days", "training_weeks"
