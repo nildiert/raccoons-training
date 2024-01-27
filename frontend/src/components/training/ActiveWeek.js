@@ -101,26 +101,36 @@ return (
         <div>
             {activeWeek ? (
                 <div>
-                    <h2>Training Plan: {activeWeek.training_plan.name}</h2>
-                    <h3>Week {activeWeek.number} - {activeWeek.kind}</h3>
-                    {activeWeek.working_days.map(day => (
-                        <div key={day.id} className={`card mb-3 ${getColorClass(day.kind, day.completed)}`} onClick={() => openModal(day.id)}>
-                            <div className="card-body">
-                                <h5 className="card-title">
-                                    {getDayOfWeek(day.date)} - {day.date}
-                                    <FontAwesomeIcon icon={day.completed ? faCheck : faTimes} className="ms-2" />
-                                </h5>
-                                <p className="card-text">
-                                    <FontAwesomeIcon icon={faClock} /> Duration: {day.duration} mins
-                                    <br />
-                                    {day.kind}
-                                </p>
-                            </div>
+                    <div className="card my-3">
+                        <div className="card-header">
+                            <h2>Training Plan: {activeWeek.training_plan.name}</h2>
                         </div>
-                    ))}
+                        <div className="card-body">
+                            <h3 className="card-title">Week {activeWeek.number} - {activeWeek.kind}</h3>
+                            {activeWeek.working_days.map(day => (
+                                <div key={day.id} className={`card mb-3 ${getColorClass(day.kind, day.completed)}`} onClick={() => openModal(day.id)}>
+                                    <div className="card-body">
+                                        <h5 className="card-title d-flex justify-content-between align-items-center">
+                                            {getDayOfWeek(day.date)} - {day.date}
+                                            <FontAwesomeIcon icon={day.completed ? faCheck : faTimes} className="ms-2" />
+                                        </h5>
+                                        <p className="card-text">
+                                            <FontAwesomeIcon icon={faClock} className="me-2" />Duration: {day.duration} mins
+                                            <br />
+                                            {day.kind}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             ) : (
-                <div>Loading ...</div>
+                <div className="text-center my-5">
+                    <div className="spinner-border text-primary" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </div>
+                </div>
             )}
 
             <Modal
