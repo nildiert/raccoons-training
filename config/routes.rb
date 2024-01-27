@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :profiles
   resources :working_days
   resources :training_weeks
   get 'training_plans/active', to: 'training_plans#active'

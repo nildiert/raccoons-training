@@ -6,4 +6,13 @@ class User < ApplicationRecord
          # :recoverable, :rememberable, :validatable
   has_many :training_plans
   has_many :working_days
+  has_one :profile
+  after_create :create_profile
+
+
+  private
+
+  def create_profile
+    Profile.create(user: self)
+  end
 end
