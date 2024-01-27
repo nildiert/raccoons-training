@@ -7,11 +7,15 @@ class User < ApplicationRecord
   has_many :training_plans
   has_many :working_days
   has_one :profile
-  after_create :create_profile
+  has_one :role
+  after_create :create_profile, :create_role
 
 
   private
 
+  def create_role
+    Role.create(user: self, name: 'user')
+  end
   def create_profile
     Profile.create(user: self)
   end
