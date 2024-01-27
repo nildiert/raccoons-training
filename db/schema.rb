@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2024_01_27_223931) do
     t.boolean "current", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "number_of_weeks", default: 1
     t.index ["user_id"], name: "index_training_plans_on_user_id"
   end
 
