@@ -39,7 +39,7 @@ class TrainingPlansController < ApplicationController
   end
 
   def active
-    current_training_week = current_user.working_days.find_by(date: Date.today).training_week
+    current_training_week = current_user.current_training_plan.training_weeks.first
     render json: current_training_week, serializer: TrainingWeekSerializer
     # render json: @training_plan
   end

@@ -11,6 +11,10 @@ class User < ApplicationRecord
   after_create :create_profile, :create_role
 
 
+  def current_training_plan
+    training_plans.active
+  end
+
   private
 
   def create_role

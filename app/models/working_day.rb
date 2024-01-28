@@ -9,4 +9,7 @@ class WorkingDay < ApplicationRecord
     long_run: 3,
     intensity: 4
   }
+
+
+
 end
