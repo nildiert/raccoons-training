@@ -1,5 +1,5 @@
 class TrainingWeeksController < ApplicationController
-  before_action :set_training_week, only: [:update, :destroy]
+  before_action :set_training_week, only: [:show, :update, :destroy]
   before_action :authenticate_user!
 
   # GET /training_weeks
@@ -11,9 +11,9 @@ class TrainingWeeksController < ApplicationController
 
   # GET /training_weeks/1
   def show
-    @training_week = WorkingDay.preload(training_week: :working_days).find_by(date:
-                                                               Date.today, user: current_user).training_week.working_days
-    render json: @training_week
+    # @training_week = WorkingDay.preload(training_week: :working_days).find_by(date:
+    #                                                            Date.today, user: current_user).training_week.working_days
+    render json: @training_week, serializer: TrainingWeekSerializer
   end
 
   # POST /training_weeks
