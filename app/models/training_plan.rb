@@ -1,8 +1,11 @@
 class TrainingPlan < ApplicationRecord
   belongs_to :user
   has_many :training_weeks, -> { order(start_date: :asc) }
+  has_many :working_days, through: :training_weeks
+
   scope :active, -> { where(current: true).first }
-  after_create :create_training_weeks
+  after_create :create_training_weeks, :inactivate_other_training_plans
+
 
 
   private
@@ -28,6 +31,10 @@ class TrainingPlan < ApplicationRecord
       create_working_days_for_week(week, working_days)
     end
     WorkingDay.insert_all(working_days)
+  end
+
+  def inactivate_other_training_plans
+    user.training_plans.where.not(id: self.id).update_all(current: false)
   end
 
   def create_working_days_for_week(week, working_days)

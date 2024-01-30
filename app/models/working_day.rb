@@ -10,6 +10,4 @@ class WorkingDay < ApplicationRecord
     intensity: 4
   }
 
-
-
 end

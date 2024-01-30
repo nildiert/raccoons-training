@@ -10,7 +10,7 @@ class TrainingPlansController < ApplicationController
 
   # GET /training_plans/1
   def show
-    render json: @training_plan
+    render json: @training_plan, serializer: TrainingPlanSerializer
   end
 
   # POST /training_plans
@@ -52,6 +52,6 @@ class TrainingPlansController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def training_plan_params
-      params.require(:training_plan).permit(:name, :description, :user_id)
+      params.require(:training_plan).permit(:name, :description, :number_of_weeks, :start_date, :user_id)
     end
 end

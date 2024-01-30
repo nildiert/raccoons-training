@@ -7,58 +7,11 @@ const Runners = () => {
     const [runners, setRunners] = useState([]);
     const [selectedRunnerId, setSelectedRunnerId] = useState(null);
     const [showTrainingPlanModal, setShowTrainingPlanModal] = useState(false);
-    const [selectedTrainingPlanId, setSelectedTrainingPlanId] = useState(null);
     const [currentTrainingPlan, setCurrentTrainingPlan] = useState(null);
 
-
-
-    const handleSubmit = async (formData) => {
-        try {
-            const response = await fetch('http://localhost:3000/training_plans/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': localStorage.getItem('token')
-                },
-                body: JSON.stringify({ ...formData, user_id: selectedRunnerId })
-            });
-            if (!response.ok) {
-                throw new Error('Error al crear el plan de entrenamiento');
-            }
-            const data = await response.json();
-            fetchRunners(); // Opcional: recargar la lista de corredores si es necesario
-            return data; // Devuelve los datos del plan creado
-        } catch (error) {
-            console.error('Error:', error);
-            return null; // Devuelve null en caso de error
-        }
-    };
-
-    const handleViewTrainingPlanClick = async (trainingPlanId) => {
-        setSelectedTrainingPlanId(trainingPlanId);
-        try {
-            const response = await fetch(`http://localhost:3000/training_plans/${trainingPlanId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    "authorization": localStorage.getItem("token")
-                }
-            });
-            if (!response.ok) throw new Error('Error al obtener el plan de entrenamiento');
-            const data = await response.json();
-            console.log(data)
-            setCurrentTrainingPlan(data);
-            setShowTrainingPlanModal(true);
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
-
-    const handleCreatePlanClick = (runnerId) => {
-        setSelectedRunnerId(runnerId);
-        setShowModal(true);
-      };
-    
+    useEffect(() => {
+        fetchRunners();
+    }, []);
 
     const fetchRunners = async () => {
         try {
@@ -77,11 +30,52 @@ const Runners = () => {
         }
     };
 
+    const handleSubmit = async (formData) => {
+        try {
+            const response = await fetch('http://localhost:3000/training_plans/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': localStorage.getItem('token')
+                },
+                body: JSON.stringify({ ...formData, user_id: selectedRunnerId })
+            });
+            if (!response.ok) {
+                throw new Error('Error al crear el plan de entrenamiento');
+            }
+            const data = await response.json();
+            setCurrentTrainingPlan(data);
+            fetchRunners(); // Recargar la lista de corredores
+            return data;
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
 
-    useEffect(() => {
-        fetchRunners();
-    }, []);
-    
+    const handleCreatePlanClick = (runnerId) => {
+        setSelectedRunnerId(runnerId);
+        setShowModal(true);
+    };
+
+    const handleViewTrainingPlanClick = async (trainingPlanId) => {
+        try {
+            const response = await fetch(`http://localhost:3000/training_plans/${trainingPlanId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    "authorization": localStorage.getItem("token")
+                }
+            });
+            if (!response.ok) throw new Error('Error al obtener el plan de entrenamiento');
+            const data = await response.json();
+            setCurrentTrainingPlan(data);
+            setShowTrainingPlanModal(true);
+            setShowModal(false)
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
     return (
         <div className="container my-3">
             <div className="table-responsive">
@@ -99,9 +93,11 @@ const Runners = () => {
                                 <td>{`${runner.profile.first_name || ''} ${runner.profile.second_name || ''} ${runner.profile.last_name || ''} ${runner.profile.second_last_name || ''}`.trim()}</td>
                                 <td>{runner.has_training_plan ? 'Sí' : 'No'}</td>
                                 <td>
-                                    <button className="btn btn-warning text-white mx-2 my-1" onClick={() => handleViewTrainingPlanClick(runner.current_training_plan.id)}>
-                                        Ver plan
-                                    </button>
+                                    {runner.current_training_plan && (
+                                        <button className="btn btn-warning text-white mx-2 my-1" onClick={() => handleViewTrainingPlanClick(runner.current_training_plan.id)}>
+                                            Ver plan
+                                        </button>
+                                    )}
                                     <button className="btn btn-primary mx-2 my-1" onClick={() => handleCreatePlanClick(runner.id)}>
                                         Crear Plan
                                     </button>
@@ -115,12 +111,15 @@ const Runners = () => {
                 show={showModal} 
                 handleClose={() => setShowModal(false)} 
                 handleSubmit={handleSubmit}
+                handleViewTrainingPlanClick={handleViewTrainingPlanClick}
             />
-            {showTrainingPlanModal && <TrainingPlanModal 
-                show={showTrainingPlanModal} 
-                handleClose={() => setShowTrainingPlanModal(false)}
-                trainingPlan={currentTrainingPlan}
-            />}
+            {showTrainingPlanModal && (
+                <TrainingPlanModal 
+                    show={showTrainingPlanModal} 
+                    handleClose={() => setShowTrainingPlanModal(false)}
+                    trainingPlan={currentTrainingPlan}
+                />
+            )}
         </div>
     );
 };
