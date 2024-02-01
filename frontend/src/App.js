@@ -7,6 +7,8 @@ import ActiveWeek from './components/training/ActiveWeek';
 import Profile from './components/Profile'
 import FooterNav from './components/FooterNav';
 import Header from './components/Header'; // Asegúrate de importar el Header
+import Shopping from './components/Shopping';
+
 
 
 import './App.css';
@@ -33,6 +35,7 @@ function App() {
           <Route path="/training" element={currUser ? <ActiveWeek currUser={currUser} /> : <Navigate to="/login" />} />
           <Route path="/runners" element={currUser ? <Runners currUser={currUser} /> : <Navigate to="/login" />} />
           <Route path="/profile" element={currUser ? <Profile currUser={currUser} /> : <Navigate to="/login" />} />
+          <Route path="/shopping" element={currUser ? <Shopping currUser={currUser} /> : <Navigate to="/login" />} />
           {/* Agrega más rutas según sea necesario */}
         </Routes>
       </div>

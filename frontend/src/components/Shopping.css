@@ -1,0 +1,94 @@
+.shopping {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px; /* Espacio entre tarjetas */
+  padding: 10px;
+}
+
+.product-card {
+  width: calc(50% - 15px); /* Tarjetas en dos columnas */
+  border-radius: 10px;
+  overflow: hidden; /* Esconde el exceso de la imagen */
+}
+
+.product-image {
+  height: 200px; /* Altura fija para todas las tarjetas */
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.product-overlay {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Película oscura */
+}
+
+.product-name {
+  font-size: 1.5rem; /* Tamaño grande */
+  color: white;
+  text-align: center;
+  margin-bottom: 20px; /* Espacio entre el nombre y los detalles */
+}
+
+.product-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  position: absolute;
+  bottom: 10px; /* Posición en la parte inferior */
+  padding: 0 10px;
+}
+
+.product-price {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo con transparencia */
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.product-description {
+  position: absolute;
+  bottom: 10px; /* Ajusta según tus necesidades */
+  left: 10px;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro para resaltar el texto */
+  padding: 5px;
+  border-radius: 5px;
+}
+
+@media (max-width: 600px) {
+  .product-card {
+    width: 100%; /* En pantallas pequeñas, una sola columna */
+  }
+}
+
+.add-to-cart-btn {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: #007bff; /* Color del botón */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Espacio entre icono y texto */
+  transition: background-color 0.3s;
+}
+
+.add-to-cart-btn:hover {
+  background-color: #0056b3; /* Color al pasar el mouse */
+}
+
+.add-to-cart-btn:focus {
+  outline: none;
+}
