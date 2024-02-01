@@ -6,8 +6,7 @@ const HomePage = ({ currUser }) => {
     return (
         <div>
             {/* Contenido de la página principal */}
-            <h1>Plan de Entrenamiento Actual</h1>
-            <ActiveWeek currUser={currUser} />
+            <h1>Home</h1>
             {/* Puedes agregar más contenido aquí */}
         </div>
     );

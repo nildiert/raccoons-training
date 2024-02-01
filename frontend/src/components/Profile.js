@@ -56,7 +56,7 @@ const Profile = () => {
       }
   };
 
-    if (!profileData) return <div>Cargando...</div>;
+    if (!profileData) return <div></div>;
 
     return (
       <div className="profile-form container mt-5">

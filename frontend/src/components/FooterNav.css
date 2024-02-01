@@ -1,0 +1,26 @@
+/* En src/components/FooterNav.css */
+.footer-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    z-index: 1100;
+  }
+  
+  .nav-item {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    flex-direction: column;
+    text-decoration: none;
+    color: grey;
+    font-size: 24px; /* Ajusta el tamaño de los iconos */
+  }
+  
+  .nav-item.active {
+    color: blue; /* Color para el ícono activo */
+  }
+  
