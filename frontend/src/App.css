@@ -1,3 +1,29 @@
 .content, .navigation {
   z-index: 1; /* Menor que el Header y el Sidebar */
 }
+
+/* Colores y bordes */
+:root {
+  --primary-color: #007bff; /* Color principal, puede ser el color de tu marca */
+  --secondary-color: #6c757d; /* Un color secundario */
+  --text-color: #333; /* Color para el texto */
+  --background-color: #f8f9fa; /* Color de fondo general */
+  --border-radius: 15px; /* Radio de bordes redondeados */
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: 'Arial', sans-serif; /* Escoge una fuente adecuada */
+}
+
+.card {
+  background-color: white;
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra sutil para los cards */
+  margin-bottom: 15px; /* Espaciado entre cards */
+}
+
+.card-header, .card-body {
+  padding: 15px; /* Espaciado interno de los cards */
+}

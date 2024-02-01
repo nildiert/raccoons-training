@@ -34,6 +34,21 @@
     right: 15px;
     cursor: pointer;
   }
+
+  .btn {
+    background-color: var(--primary-color);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: var(--border-radius);
+    font-size: 16px; /* Tamaño adecuado para móviles */
+    text-transform: uppercase; /* Opcional para un estilo más moderno */
+    margin: 5px 0; /* Espaciado entre botones */
+}
+
+.btn:hover {
+    background-color: darken(var(--primary-color), 10%); /* Oscurecer al pasar el mouse */
+}
   
   /* Animación de apertura */
   @keyframes modalFadeIn {

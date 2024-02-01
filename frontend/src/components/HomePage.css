@@ -1,0 +1,40 @@
+/* HomePage.css */
+.carousel-image-container {
+    position: relative;
+}
+
+.carousel-image-container img {
+    width: 100%;
+}
+
+.carousel-item {
+    height: 400px; /* Ajusta esto según tus necesidades */
+    overflow: hidden;
+}
+
+.carousel-caption-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+
+
+.carousel-caption h3, .carousel-caption p {
+    color: white;
+}
+
+.carousel-image-container img {
+    width: 100%;
+    min-height: 400px; /* Asegúrate de que las imágenes tengan al menos esta altura */
+    object-fit: cover; /* Esto hace que la imagen cubra el contenedor sin distorsionarse */
+    border-radius: 15px;
+}
+
+.carousel-image-container {
+    overflow: hidden;
+    border-radius: 15px;
+}
