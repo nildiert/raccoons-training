@@ -1,0 +1,34 @@
+/* En src/components/Header.css */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    background-color: #f8f9fa;
+    z-index: 100; /* Un valor mayor que el contenido estándar pero menor que el sidebar */
+  }
+  
+  /* En src/components/Sidebar.css */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 300px; /* Ajusta según tus necesidades */
+    height: 100%;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+    animation-duration: 0.5s; /* Duración de la animación */
+    animation-fill-mode: both;
+  }
+  
+  .header .fa-user-circle {
+    cursor: pointer; /* Cambia el cursor a pointer */
+    transition: color 0.3s; /* Transición suave para el cambio de color */
+  }
+  
+  .header .fa-user-circle:hover {
+    color: #007bff; /* Cambia el color al pasar el ratón por encima */
+  }

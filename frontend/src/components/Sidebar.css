@@ -1,0 +1,29 @@
+/* En src/components/Sidebar.css */
+.close-sidebar {
+    position: absolute;
+    top: 10px; /* Ajusta según necesidad */
+    right: 10px; /* Ajusta según necesidad */
+    border: none;
+    background: none;
+    font-size: 24px; /* Ajusta según necesidad */
+    cursor: pointer;
+  }
+  
+
+  @keyframes slideIn {
+    from {
+      right: -300px; /* Asegúrate de que este valor coincida con el ancho de tu sidebar */
+    }
+    to {
+      right: 0;
+    }
+  }
+  
+  @keyframes slideOut {
+    from {
+      right: 0;
+    }
+    to {
+      right: -300px; /* Igual que el valor de 'from' en slideIn */
+    }
+  }
