@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CreateTrainingPlanModal from './CreateTrainingPlanModal';
 import TrainingPlanModal from './TrainingPlanModal';
+import { httpService } from '../../services/httpService';
 
 const Runners = () => {
     const [showModal, setShowModal] = useState(false);
@@ -15,15 +16,7 @@ const Runners = () => {
 
     const fetchRunners = async () => {
         try {
-            const response = await fetch('http://localhost:3000/runners/index', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    "authorization": localStorage.getItem("token")
-                }
-            });
-            if (!response.ok) throw new Error('Error en la solicitud');
-            const data = await response.json();
+            const data = await httpService.get('/runners/index');
             setRunners(data);
         } catch (error) {
             console.error('Error al obtener los corredores:', error);
@@ -32,18 +25,7 @@ const Runners = () => {
 
     const handleSubmit = async (formData) => {
         try {
-            const response = await fetch('http://localhost:3000/training_plans/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': localStorage.getItem('token')
-                },
-                body: JSON.stringify({ ...formData, user_id: selectedRunnerId })
-            });
-            if (!response.ok) {
-                throw new Error('Error al crear el plan de entrenamiento');
-            }
-            const data = await response.json();
+            const data = await httpService.post('/training_plans/', { ...formData, user_id: selectedRunnerId })
             setCurrentTrainingPlan(data);
             fetchRunners(); // Recargar la lista de corredores
             return data;
@@ -59,15 +41,7 @@ const Runners = () => {
 
     const handleViewTrainingPlanClick = async (trainingPlanId) => {
         try {
-            const response = await fetch(`http://localhost:3000/training_plans/${trainingPlanId}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    "authorization": localStorage.getItem("token")
-                }
-            });
-            if (!response.ok) throw new Error('Error al obtener el plan de entrenamiento');
-            const data = await response.json();
+            const data = await httpService.get(`/training_plans/${trainingPlanId}`);
             setCurrentTrainingPlan(data);
             setShowTrainingPlanModal(true);
             setShowModal(false)

@@ -5,6 +5,8 @@ import Modal from 'react-modal';
 import WorkingDay from "./WorkingDay";
 import CongratulationsModal from './CongratulationsModal';
 
+import { httpService } from "../../services/httpService";
+
 
 
 
@@ -15,20 +17,9 @@ const ActiveWeek=({currUser})=>{
     const [workingDayDetails, setWorkingDayDetails] = useState(null);
     const [showCongratsModal, setShowCongratsModal] = useState(false);
 
-
-
     const openModal = async (workingDayId) => {
-        // Aquí realizas la consulta a la API para obtener los detalles
         try {
-            const response = await fetch(`http://localhost:3000/working_days/${workingDayId}`, {
-                method: "get",
-                headers: {
-                    "content-type": "application/json",
-                    "authorization": localStorage.getItem("token")
-                }
-            });
-            if (!response.ok) throw Error;
-            const data = await response.json();
+            const data = await httpService.get(`/working_days/${workingDayId}`);
             setWorkingDayDetails(data);
             setModalIsOpen(true);
         } catch (error) {
@@ -37,42 +28,23 @@ const ActiveWeek=({currUser})=>{
     };
 
     const markAsCompleted = async (workingDayId, isCompleted) => {
-        const url = `http://localhost:3000/working_days/${workingDayId}`;
         try {
-            const response = await fetch(url, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': localStorage.getItem("token")
-                },
-                body: JSON.stringify({ completed: !isCompleted }) // Invierte el estado actual
-            });
-            if (!response.ok) throw new Error('Error al actualizar');
-            
-            // Actualiza el estado o realiza cualquier otra acción necesaria después de la actualización
+            await httpService.put(`/working_days/${workingDayId}`, { completed: !isCompleted });
             if (!isCompleted) {
-                setShowCongratsModal(true); // Muestra el modal de felicitaciones si se completa
+                setShowCongratsModal(true);
             }
-            setModalIsOpen(false); // Cierra el modal de detalles del día de entrenamiento
-            getData(); // Actualiza los datos del plan de entrenamiento
+            setModalIsOpen(false);
+            getData();
         } catch (error) {
-            console.error("Error al actualizar el día de entrenamiento", error);
+            console.log("error", error);
         }
     };
 
 
-    const getData=async ()=>{
+    const getData = async () => {
         try {
-            const response=await fetch("http://localhost:3000/training_plans/active", {
-                method: "get",
-                headers: {
-                    "content-type": "application/json",
-                    "authorization": localStorage.getItem("token")
-                }
-            })
-            if(!response.ok) throw Error
-            const data=await response.json()
-            setActiveWeek(data)
+            const data = await httpService.get(`/training_plans/active`);
+            setActiveWeek(data);
         }
         catch(error){
             console.log("error", error)
@@ -82,6 +54,7 @@ const ActiveWeek=({currUser})=>{
     useEffect(() => {
         if (currUser) getData();
     }, [currUser]);
+
     const getColorClass = (kind, completed) => {
         const baseClass = completed ? 'bg-' : 'border border-2 border-';
         switch (kind) {
