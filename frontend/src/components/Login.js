@@ -1,27 +1,17 @@
 import { useRef } from "react"
+import { httpService } from "../services/httpService";
 
 const Login = ({setCurrUser, setShow}) =>{
   const formRef=useRef()
   const login = async (userInfo) => {
-    const url = "http://localhost:3000/login";
     try {
-      const response = await fetch(url, {
-        method: "post",
-        headers: {
-          'content-type': 'application/json',
-          'accept': 'application/json'
-        },
-        body: JSON.stringify(userInfo)
-      });
-      const data = await response.json();
-      if (!response.ok) throw data.error;
-      localStorage.setItem("token", response.headers.get("Authorization"));
-      localStorage.setItem("userId", data.id);
-      setCurrUser(true);        
+      const data = await httpService.post('/login', userInfo, {});
+      setCurrUser(true);
     } catch (error) {
       console.log("error", error);
     }
   };
+
   const handleSubmit = e => {
     e.preventDefault();
     const formData = new FormData(formRef.current);

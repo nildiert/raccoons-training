@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { faRunning } from '@fortawesome/free-solid-svg-icons';
 import { Modal, Accordion, Form, Button } from 'react-bootstrap';
+import { httpService } from '../../services/httpService';
 
 const kindOptions = {
     rest: 'Descanso',
@@ -57,20 +58,7 @@ const TrainingPlanModal = ({ show, handleClose, trainingPlan }) => {
 
     const updateTrainingWeekKind = async (weekId, newKind) => {
         try {
-            const response = await fetch(`http://localhost:3000/training_weeks/${weekId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    "authorization": localStorage.getItem("token")
-                },
-                body: JSON.stringify({ kind: newKind })
-            });
-            if (!response.ok) {
-                throw new Error('Error al actualizar el tipo de semana');
-            }
-            const updatedWeek = await response.json();
-            console.log('Semana actualizada:', updatedWeek);
-            // Aquí puedes actualizar el estado del componente si es necesario
+            await httpService.put(`/training_weeks/${weekId}`, { kind: newKind});
         } catch (error) {
             console.error('Error:', error);
         }
@@ -88,22 +76,7 @@ const TrainingPlanModal = ({ show, handleClose, trainingPlan }) => {
                 console.error('Información del día no actualizada o incompleta');
                 return;
             }
-    
-            const response = await fetch(`http://localhost:3000/working_days/${dayId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    "authorization": localStorage.getItem("token")
-                },
-                body: JSON.stringify(updatedDay)
-            });
-    
-            if (!response.ok) {
-                throw new Error('Error al actualizar el día de entrenamiento');
-            }
-            const data = await response.json();
-            console.log('Día actualizado:', data);
-            // Aquí puedes actualizar el estado del componente si es necesario
+            await httpService.put(`/working_days/${dayId}`, updatedDay);
         } catch (error) {
             console.error('Error:', error);
         }

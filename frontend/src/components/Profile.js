@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { httpService } from '../services/httpService';
 
 const Profile = () => {
     const [profileData, setProfileData] = useState(null);
@@ -15,15 +16,7 @@ const Profile = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                  const response = await fetch(`http://localhost:3000/profiles/${userId}`, {
-                    method: "get",
-                    headers: {
-                        "content-type": "application/json",
-                        "authorization": localStorage.getItem("token")
-                    }
-                })                  
-                if (!response.ok) throw new Error('Error al obtener el perfil');
-                const data = await response.json();
+                const data = await httpService.get(`/profiles/${userId}`);
                 setProfileData(data);
             } catch (error) {
                 console.error('Error:', error);
@@ -38,19 +31,8 @@ const Profile = () => {
       e.preventDefault();
   
       try {
-          const response = await fetch(`http://localhost:3000/profiles/${profileData.id}`, {
-              method: 'PUT',
-              headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': localStorage.getItem("token") 
-              },
-              body: JSON.stringify(profileData)
-          });
-  
-          if (!response.ok) throw new Error('Error al actualizar el perfil');
-  
-          const updatedData = await response.json();
-          setProfileData(updatedData);
+            const data = await httpService.put(`/profiles/${profileData.id}`, profileData);
+            setProfileData(data);
       } catch (error) {
           console.error('Error:', error);
       }
