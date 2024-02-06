@@ -72,4 +72,16 @@ export const httpService = {
     return handleResponse(response).then(res => res.json());
   },
 
+  async delete(url, data, customHeaders = {}) {
+    const response = await fetch(`${baseUrl}${url}`, {
+      method: 'DELETE',
+      headers: {
+        ...headersDefault,
+        ...customHeaders,
+        'Authorization': localStorage.getItem('token') ? localStorage.getItem('token') : '',
+      },
+    });
+    return handleResponse(response).then(res => res.json());
+  },
+
 };
