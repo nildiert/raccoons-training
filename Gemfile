@@ -49,3 +49,5 @@ gem "active_model_serializers", "~> 0.10.14"
 gem "annotate", "~> 3.2"
 
 gem "awesome_print", "~> 1.9"
+gem 'sprockets-rails', require: 'sprockets/railtie'
+

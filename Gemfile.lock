@@ -239,6 +239,7 @@ DEPENDENCIES
   rack-cors
   rails (~> 6.1.7, >= 6.1.7.6)
   spring
+  sprockets-rails
   tzinfo-data
 
 RUBY VERSION
